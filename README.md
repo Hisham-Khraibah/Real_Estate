@@ -1,7 +1,7 @@
 # real_estate_price_prediction
 This app has been built using Streamlit and can be deployed using Streamlit Community Cloud.
 
-URL:
+https://khra0005-real-estate.streamlit.app/
 
 This application predicts the price of a house based on various property-related features. The model leverages machine learning techniques to estimate real estate prices and help users understand property valuation.
 
