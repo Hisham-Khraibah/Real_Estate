@@ -14,6 +14,10 @@ try:
     with open("models/RFmodel.pkl", "rb") as rf_file:
         rf_model = pickle.load(rf_file)
 
+    # Load the feature names used during training
+    with open("models/feature_columns.pkl", "rb") as col_file:
+        feature_columns = pickle.load(col_file)
+
     # Prepare the form to collect user inputs
     with st.form("user_inputs"):
         st.subheader("Property Details")
@@ -81,6 +85,9 @@ try:
                 "property_age": property_age,
                 "property_type_Condo": property_type_Condo
             }])
+
+            # Reorder the input columns to match the training data
+            prediction_input = prediction_input.reindex(columns=feature_columns)
 
             # Make prediction
             new_prediction = rf_model.predict(prediction_input)

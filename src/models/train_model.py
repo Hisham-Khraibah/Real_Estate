@@ -1,6 +1,7 @@
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 import pickle
+import os
 
 # Function to train the model
 def train_model(X, y):
@@ -18,11 +19,19 @@ def train_model(X, y):
             random_state=42
         ).fit(X_train, y_train)
 
+        # Create models folder if it does not exist
+        os.makedirs('models', exist_ok=True)
+
         # Save the trained model
         with open('models/RFmodel.pkl', 'wb') as f:
             pickle.dump(model, f)
+
+        # Save the feature names used during training
+        with open('models/feature_columns.pkl', 'wb') as f:
+            pickle.dump(list(X.columns), f)
 
         return model, X_test, y_test
 
     except Exception as e:
         print("Error while training the model:", e)
+        return None, None, None
