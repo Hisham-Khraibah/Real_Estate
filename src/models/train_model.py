@@ -5,20 +5,24 @@ import pickle
 # Function to train the model
 def train_model(X, y):
 
-    # Splitting the data into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, stratify=X['property_type_Condo'], random_state=42
-    )
+    try:
+        # Splitting the data into training and testing sets
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=0.2, random_state=42
+        )
 
-    # Train the random forest regression model
-    model = RandomForestRegressor(
-        n_estimators=200,
-        criterion='absolute_error',
-        random_state=42
-    ).fit(X_train, y_train)
+        # Train the random forest regression model
+        model = RandomForestRegressor(
+            n_estimators=200,
+            criterion='absolute_error',
+            random_state=42
+        ).fit(X_train, y_train)
 
-    # Save the trained model
-    with open('models/RFmodel.pkl', 'wb') as f:
-        pickle.dump(model, f)
+        # Save the trained model
+        with open('models/RFmodel.pkl', 'wb') as f:
+            pickle.dump(model, f)
 
-    return model, X_test, y_test
+        return model, X_test, y_test
+
+    except Exception as e:
+        print("Error while training the model:", e)

@@ -5,20 +5,43 @@ from src.models.train_model import train_model
 from src.models.predict_model import evaluate_model
 
 if __name__ == "__main__":
-    # Load and preprocess the data
-    data_path = "data/raw/final.csv"
-    df = load_and_preprocess_data(data_path)
+    
+    try:
+        # Load and preprocess the data
+        data_path = "data/raw/final.csv"
+        df = load_and_preprocess_data(data_path)
 
-    # Plot the correlation heatmap
-    plot_correlation_heatmap(df)
+        if df is None:
+            print("Data loading failed.")
+            exit()
 
-    # Create features and separate features and target
-    X, y = build_features(df)
+        # Plot the correlation heatmap
+        plot_correlation_heatmap(df)
 
-    # Train the random forest regression model
-    model, X_test, y_test = train_model(X, y)
+        # Create features and separate features and target
+        X, y = build_features(df)
 
-    # Evaluate the model
-    plot_feature_importance(model, X)
-    mae = evaluate_model(model, X_test, y_test)
-    print(f"Mean Absolute Error: {mae}")
+        if X is None or y is None:
+            print("Feature building failed.")
+            exit()
+
+        # Train the random forest regression model
+        model, X_test, y_test = train_model(X, y)
+
+        if model is None:
+            print("Model training failed.")
+            exit()
+
+        # Plot feature importance
+        plot_feature_importance(model, X)
+
+        # Evaluate the model
+        mae = evaluate_model(model, X_test, y_test)
+
+        if mae is not None:
+            print(f"Mean Absolute Error: {mae}")
+        else:
+            print("Model evaluation failed.")
+
+    except Exception as e:
+        print("Error while running the pipeline:", e)
