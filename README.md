@@ -45,6 +45,7 @@ The application uses a **Real Estate Dataset**, which includes the following fea
   * Mean Absolute Error (MAE)
 
 ## Project Structure
+```
 src/
 │
 ├── data/
@@ -65,6 +66,7 @@ src/
 main.py
 streamlit.py
 requirements.txt
+```
 
 ## Technologies Used
 * **Streamlit**: For building the web application.
